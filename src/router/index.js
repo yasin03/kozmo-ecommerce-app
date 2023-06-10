@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Home from "../components/home";
 import Product from "../components/product";
-import Chart from "../components/chart";
+import Cart from "../components/cart";
 import ProductDetail from "../components/product/product-detail";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,7 @@ const Router = () => {
         />
         <Stack.Screen name="Product" component={Product} />
         <Stack.Screen name="ProductDetail" component={ProductDetail} />
-        <Stack.Screen name="Chart" component={Chart} />
+        <Stack.Screen name="Cart" component={Cart} />
       </Stack.Navigator>
     </NavigationContainer>
   );

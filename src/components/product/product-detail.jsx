@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-const ProductDetail = ({ route }) => {
+const ProductDetail = ({ navigation, route }) => {
   const [qty, setQty] = useState(1);
 
   const decrement = () => {
@@ -38,20 +38,40 @@ const ProductDetail = ({ route }) => {
     <SafeAreaView className="relative flex-1 mx-4 ">
       <ScrollView showsVerticalScrollIndicator={false}>
         <Image src={item.image_link} className="w-full h-72" />
-        {/* Brand Name & Price Area */}
-        <View className="flex flex-row justify-between items-center">
-          <View className="">
-            <Text className=" text-pBlack900 text-lg font-semibold">
-              {item.name}
-            </Text>
+        {/* Brand Name */}
+        <View className="flex flex-row justify-between items-center my-2">
+          <Text className=" text-pBlack900 text-lg font-semibold">
+            {item.name}
+          </Text>
+        </View>
+
+        {/*Price Area */}
+        <View className="flex flex-row justify-between items-center my-1">
+          <View className="flex flex-row items-center">
+            <TouchableOpacity
+              className="rounded-lg flex justify-center items-center bg-pBlack-50 border border-pBlack-400 w-8 h-8"
+              onPress={() => decrement()}
+            >
+              <Text className="font-semibold text-lg ">-</Text>
+            </TouchableOpacity>
+            <Text className="mx-4 font-bold text-lg">{qty}</Text>
+            <TouchableOpacity
+              className="rounded-lg flex justify-center items-center bg-pBlack-300 w-8 h-8"
+              onPress={() => increment()}
+            >
+              <Text className="font-semibold text-lg text-pBlack-50">+</Text>
+            </TouchableOpacity>
           </View>
-          <View className="flex justify-end items-end">
-            <Text className=" text-xl font-semibold">{item.price}$</Text>
-            <Text className=" text-sm">219 people buy this</Text>
+          <View className="flex items-end">
+            <Text className="line-through">{item.price} $</Text>
+            <Text className="text-xl font-semibold text-pPink-900">
+              {(item.price * qty).toFixed(2)}$
+            </Text>
+            <Text className="text-sm">219 people buy this</Text>
           </View>
         </View>
         {/* Color Choices Area */}
-        <View className="my-4">
+        <View className="my-2">
           <Text className="mb-2 text-pBlack-500">Color Choices</Text>
           <View className="flex flex-row ">
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -94,37 +114,24 @@ const ProductDetail = ({ route }) => {
         </View>
         {/* Description Area */}
         <View className="mb-16">
+          <Text className="text-xl my-2 font-bold ">Product Description</Text>
           <Text className="text-lg my-2 text-justify">{desc}</Text>
         </View>
       </ScrollView>
       {/* Add Chart Section */}
       <View className="absolute bottom-0 left-0 right-0 bg-pBlack-50 p-3">
         <View className="flex flex-row items-center justify-between">
-          <View className="flex flex-row items-center">
-            <TouchableOpacity
-              className="bg-gray-500 rounded-full"
-              onPress={() => decrement()}
-            >
-              <Text className="font-semibold text-lg border border-pBlack-400 px-4 py-1 rounded-lg">
-                -
-              </Text>
-            </TouchableOpacity>
-            <Text className="mx-4 font-bold text-lg">{qty}</Text>
-            <TouchableOpacity
-              className="bg-gray-500 rounded-full"
-              onPress={() => increment()}
-            >
-              <Text className="font-semibold text-lg text-pBlack-50 bg-pBlack-400 px-4 py-1 rounded-lg">
-                +
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity className="bg-pPink-700 rounded-md p-3">
-            <Text className="text-pBlack-50">Sepete Ekle</Text>
+          <TouchableOpacity className="p-2 px-6 bg-[#075E54] rounded-lg cursor-pointer">
+            <Text className="text-white font-medium text-lg">WhatsApp</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="bg-pPink-700 rounded-md p-2 px-6"
+            onPress={() => navigation.navigate("Cart", { item, qty })}
+          >
+            <Text className="text-white font-medium text-lg">Add Cart</Text>
           </TouchableOpacity>
         </View>
       </View>
-
     </SafeAreaView>
   );
 };
